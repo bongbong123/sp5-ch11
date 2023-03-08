@@ -33,8 +33,9 @@ public class Member {
         this.mb_pw = newPwd;
     }
 
-    public static Member CreateMember(String mb_id, String mb_pw){
+    public static Member CreateMember(String email, String mb_id, String mb_pw){
         return Member.builder()
+                .email(email)
                 .mb_id(mb_id)
                 .mb_pw(mb_pw)
                 .build();

@@ -22,7 +22,7 @@ public class MemberRegistrerService {
             throw new DuplicateMemberException("dup email " + email);
         }
 
-        Member newMember = Member.CreateMember(id, password);
+        Member newMember = Member.CreateMember(email, id, password);
         memberRepository.save(newMember);
 
         return newMember.getSeq();

@@ -6,10 +6,8 @@ import com.example.sp5ch11.exception.DuplicateMemberException;
 import com.example.sp5ch11.service.MemberRegistrerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/register")
@@ -26,10 +24,10 @@ public class RegistController {
     @PostMapping("/step2")
     public String handleStep2(
             @RequestParam(value = "agree", defaultValue = "false") Boolean agree) {
-
         if(!agree){
             return "register/step1";
         }
+
         return "register/step2";
     }
 
@@ -39,7 +37,7 @@ public class RegistController {
     }
 
     @PostMapping("/step3")
-    public String handleStep3(RegisterRequest req) {
+    public String handleStep3(@ModelAttribute("fromData") RegisterRequest req) {
         try {
             memberRegistrerService.regist(req.getEmail(), req.getName(), req.getPassword());
             return "register/step3";
