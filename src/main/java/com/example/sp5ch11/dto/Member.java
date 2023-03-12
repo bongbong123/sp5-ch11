@@ -40,4 +40,8 @@ public class Member {
                 .mb_pw(mb_pw)
                 .build();
     }
+
+    public boolean matchPassword(String password) {
+        return this.mb_pw.equals(password);
+    }
 }
