@@ -4,29 +4,26 @@ import com.example.sp5ch11.dto.AuthInfo;
 import com.example.sp5ch11.dto.LoginCommand;
 import com.example.sp5ch11.exception.WrongIdPasswordException;
 import com.example.sp5ch11.service.AuthService;
-import lombok.Getter;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/login")
 @RequiredArgsConstructor
 public class LoginController {
 
     private final AuthService authService;
 
-    @GetMapping
+    @GetMapping("/login")
     public String form(LoginCommand loginCommand) {
         return "login/loginForm";
     }
 
-    @PostMapping("/submit")
-    public String submit(@ModelAttribute LoginCommand loginCommand, Errors errors) {
+    @PostMapping("/login/submit")
+    public String submit(@ModelAttribute LoginCommand loginCommand, Errors errors, HttpSession session, Model model) {
         new LoginCommandValidator().validate(loginCommand, errors);
         if (errors.hasErrors()) {
             return "login/loginForm";
@@ -37,11 +34,20 @@ public class LoginController {
                     loginCommand.getEmail(),
                     loginCommand.getPassword()
             );
+
+            session.setAttribute("authInfo", authInfo);
+            model.addAttribute("authInfo", authInfo);
+
             return "login/loginSuccess";
         } catch (WrongIdPasswordException e) {
             errors.reject("idPassrodNotMatching");
             return "login/loginForm";
         }
+    }
+
+    @GetMapping("/main")
+    public String main() {
+        return "main";
     }
 
 }

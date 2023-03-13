@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호 변경</title>
+</head>
+<body>
+    <form action="changePassword" method="post">
+        <p>
+            <label>현재 비밀번호</label>
+            <input type="password" name="currentPassword" />
+            <th:errors path="currentPassword"/>
+        </p>
+        <p>
+            <label>새 비밀번호</label>
+            <input type="password" name="newPassword" />
+            <th:errors path="newPassword"/>
+        </p>
+        <input type="submit" value="변경하기" />
+    </form>
+</body>
+</html>

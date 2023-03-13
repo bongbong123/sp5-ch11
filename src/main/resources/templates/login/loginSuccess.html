@@ -5,7 +5,12 @@
     <title>로그인</title>
 </head>
 <body>
-    <p>로그인에 성공했습니다.</p>
-    <p><a href="/login">[메인으로 이동]</a> </p>
+    <form>
+        <p>로그인에 성공했습니다.</p>
+        <p th:text="${authInfo.email}" name="email" value="${authInfo.email}"></p>
+        <p th:text="${authInfo.id}" name="id" value="${authInfo.id}" ></p>
+        <p th:text="${authInfo}" name="authInfo" value="${authInfo}" ></p>
+        <p><a href="/main" modelAttribute="authInfo">[메인으로 이동]</a> </p>
+    </form>
 </body>
 </html>
